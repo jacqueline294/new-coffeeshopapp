@@ -15,7 +15,7 @@ fun AppNavigator() {
         composable("login") { LoginPage() }
         composable("SignUp") { RegistrationPage() }
         composable("drinks") { DrinksListPage() }
-        composable("map") { MapPage() }
+        //composable("map") { MapPage() }
     }
 }
 

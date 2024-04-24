@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.TextField
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.coffeshopapp.Credentials
-import com.example.lab3coffeeshopapp.Credentials
+
 
 @Composable
 fun RegistrationPage() {
@@ -43,7 +42,7 @@ fun RegistrationPage() {
             TextField(
                 value = "",
                 onValueChange = onChange,
-                label = { Text("Username") },
+                //label = { Text("Username") },
                 modifier = modifier
             )
         }
@@ -53,7 +52,7 @@ fun RegistrationPage() {
             TextField(
                 value = "",
                 onValueChange = onChange,
-                label = { Text("Password") },
+                //label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 modifier = modifier
@@ -74,7 +73,7 @@ fun RegistrationPage() {
             shape = RoundedCornerShape(5.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Register")
+            //Text("Register")
         }
     }
 }
