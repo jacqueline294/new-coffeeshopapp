@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application") version "8.2.2"
-    kotlin("android") version "1.6.10"
+    kotlin("android") version "1.6.21"
     id("com.google.gms.google-services")
 }
 
@@ -56,6 +56,7 @@ android {
 }
 
 dependencies {
+    implementation("libs.groovy.core")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.0")

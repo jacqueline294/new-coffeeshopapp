@@ -64,7 +64,7 @@ fun LoginPage() {
         )
         Spacer(modifier = Modifier.height(4.dp))
 
-        // Password Field
+
         var password by remember { mutableStateOf("") }
         OutlinedTextField(
             value = password,
@@ -76,7 +76,6 @@ fun LoginPage() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Error Message
         var errorMessage by remember { mutableStateOf("") }
         if (errorMessage.isNotEmpty()) {
             Text(
@@ -87,7 +86,7 @@ fun LoginPage() {
             )
         }
 
-        // Login Button
+
         Button(
             onClick = {
                 if (email.isNotEmpty() && password.isNotEmpty()) {
