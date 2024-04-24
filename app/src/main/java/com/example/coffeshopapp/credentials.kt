@@ -6,4 +6,9 @@ data class Credentials(
     var remember: Boolean = false
 ) {
     fun isNotEmpty(): Boolean = username.isNotEmpty() && password.isNotEmpty()
+
+    fun validate(): Boolean {
+        return username.isNotEmpty() && password.isNotEmpty()
+    }
 }
+

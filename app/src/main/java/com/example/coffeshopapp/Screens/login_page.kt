@@ -1,66 +1,110 @@
 package com.example.coffeshopapp.Screens
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerIcon
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.coffeeshop.R
+import com.example.coffeshopapp.Credentials
+import com.example.coffeshopapp.Routes
 
 @Composable
 fun LoginPage() {
-    var credentials by remember { mutableStateOf(com.example.coffeshopapp.Credentials()) }
-    val context = LocalContext.current
+    // Define gradient for background
+    val gradient = Brush.horizontalGradient(
+        colors = listOf(Color.White, Color.Cyan),
+        startX = 0f,
+        endX = 1000f
+    )
 
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 30.dp)
+            .background(brush = gradient)
+            .padding(horizontal = 16.dp) // Add padding for content
     ) {
-        TextField(
-            value = credentials.username,
-            onValueChange = { data -> credentials = credentials.copy(username = data) },
-            label = { Text("Username") },
-            modifier = Modifier.fillMaxWidth()
+        // Coffee Shop Logo
+        Image(
+            painter = painterResource(id = R.drawable.coffeelogo),
+            contentDescription = "Logo",
+            modifier = Modifier.padding(top = 32.dp, bottom = 16.dp)
         )
-        Spacer(modifier = Modifier.height(10.dp))
-        TextField(
-            value = credentials.password,
-            onValueChange = { data -> credentials = credentials.copy(password = data) },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(10.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(
-                checked = credentials.remember,
-                onCheckedChange = { checked -> credentials =
-                    credentials.copy(remember = checked) },
-                modifier = Modifier.padding(top = 10.dp)
+        // Welcome Text
+        Text(
+            text = "Welcome, Please Log in",
+            style = TextStyle(fontFamily = FontFamily.Cursive),
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        // Email Field
+        var email by remember { mutableStateOf("") }
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text(text = "Email Address") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+
+        // Password Field
+        var password by remember { mutableStateOf("") }
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text(text = "Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Error Message
+        var errorMessage by remember { mutableStateOf("") }
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                style = TextStyle(fontSize = 14.sp),
+                modifier = Modifier.padding(bottom = 8.dp)
             )
-            Text("Remember Me")
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
-
+        // Login Button
         Button(
-            onClick = { /* Handle login here */ },
-            enabled = credentials.username.isNotEmpty() && credentials.password.isNotEmpty(),
-            shape = RoundedCornerShape(5.dp),
+            onClick = {
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    // Perform login validation
+                    val credentials = Credentials(email, password)
+                    if (credentials.validate()) {
+                        navController.navigate(Routes.Screen.Home.route)
+                    } else {
+                        errorMessage = "Invalid email or password. Please try again."
+                    }
+                } else {
+                    errorMessage = "Please enter email and password."
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Login")
+            Text(text = "Login")
         }
     }
 }
